@@ -43,11 +43,13 @@ public class GunFireEnemy : MonoBehaviour
                 {
                     if (hit.collider.transform.gameObject.CompareTag("Turell") || hit.collider.transform.gameObject.CompareTag("Mob") || hit.collider.transform.gameObject.CompareTag("Player"))
                     {
+                        Debug.Log("hittuerrooo!!!");
                         hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
                         hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
                         Debug.Log("Fire!!!");
+                        Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
                     }
-                    Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
+                   
 
                 }
             }

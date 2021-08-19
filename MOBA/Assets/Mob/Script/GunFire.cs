@@ -9,7 +9,8 @@ public class GunFire : MonoBehaviour
     [SerializeField] private Transform gunPoint;
     [SerializeField] private float timeout = 0.5f;
     [SerializeField] private float dmg;
-   // [SerializeField] private Rigidbody bulletEnd;
+    [SerializeField] private Rigidbody bulletEnd;
+    // [SerializeField] private Rigidbody bulletEnd;
     private float curTimeout;
     public bool needFire = false;
     private AudioSource shoot;
@@ -41,13 +42,13 @@ public class GunFire : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, 20))
                 {
-                    if (hit.transform.gameObject.CompareTag("EnemyTurell") || hit.transform.gameObject.CompareTag("EnemyMob") || hit.transform.gameObject.CompareTag("EnemyPlayer"))
+                    if (hit.collider.transform.gameObject.CompareTag("EnemyTurell") || hit.collider.transform.gameObject.CompareTag("EnemyMob") || hit.collider.transform.gameObject.CompareTag("EnemyPlayer"))
                     {
-                        hit.transform.gameObject.GetComponent<HP>().dmg = dmg;
-                        hit.transform.gameObject.GetComponent<HP>().haveDmg = true;
+                        hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
+                        hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
                         Debug.Log("Fire!!!");
-                    }
-                    //Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
+                        Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
+                    }                   
                    
                 }
             }

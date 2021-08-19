@@ -9,7 +9,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private int ammo;
     [SerializeField] private int shot;
     [SerializeField] private GameObject fire;
-    [SerializeField] private Rigidbody bulletEnd;
+    [SerializeField] private Rigidbody bulletEndEnemy;
+    [SerializeField] private Rigidbody bulletEndStage;
     [SerializeField] private Animator ani;    
     [SerializeField] private Camera _cam;
     [SerializeField] private float reloadTime;
@@ -95,17 +96,21 @@ public class Gun : MonoBehaviour
          if (Physics.Raycast(ray, out hit, 50f))
          {
              Debug.Log(hit.transform.tag);
-             if (hit.collider.transform.gameObject.CompareTag("EnemyTurell") || hit.collider.transform.gameObject.CompareTag("EnemyMob") || hit.collider.transform.gameObject.CompareTag("EnemyPlayer"))
-             {
-                 hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
-                 hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
-                 checkDeath = hit.collider.transform.gameObject.GetComponent<HP>().hp - hit.collider.transform.gameObject.GetComponent<HP>().factor * dmg;
-                 if (checkDeath <= 0)
-                 {
+            if (hit.collider.transform.gameObject.CompareTag("EnemyTurell") || hit.collider.transform.gameObject.CompareTag("EnemyMob") || hit.collider.transform.gameObject.CompareTag("EnemyPlayer"))
+            {
+                hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
+                hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
+                checkDeath = hit.collider.transform.gameObject.GetComponent<HP>().hp - hit.collider.transform.gameObject.GetComponent<HP>().factor * dmg;
+                Rigidbody bulletInstance = Instantiate(bulletEndEnemy, hit.point, Quaternion.identity) as Rigidbody;
+                if (checkDeath <= 0)
+                {
 
-                 }
-             }
-             Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
+                }
+            }
+            else
+            {
+                Rigidbody bulletInstance = Instantiate(bulletEndStage, hit.point, Quaternion.identity) as Rigidbody;
+            }
          }
             #endregion
 
