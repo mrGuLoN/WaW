@@ -11,6 +11,7 @@ public class BestMobNavigarion : MonoBehaviour
     [SerializeField] private GunFire gunFire;
     [SerializeField] private GunFireEnemy gunFireEnemy;
     [SerializeField] private bool enemy;
+    
     public float gravity = 20f;
     private Vector3 moveDir = Vector3.zero;
     private CharacterController controller;
@@ -121,7 +122,7 @@ public class BestMobNavigarion : MonoBehaviour
             }
         }
     }
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag(enemyText + "Turell"))
         {
@@ -135,7 +136,7 @@ public class BestMobNavigarion : MonoBehaviour
         {
             TriggerRun(other.gameObject);
         }
-    }
+    }*/
 
 
     private void OnTriggerExit(Collider other)
