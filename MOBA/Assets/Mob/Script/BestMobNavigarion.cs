@@ -6,12 +6,13 @@ public class BestMobNavigarion : MonoBehaviour
 {
     [SerializeField] private Transform[] checkPoint;
     [SerializeField] private float stopDistance;
-    [SerializeField] private float speed;
-    [SerializeField] private float realMaxSpeed;
+    [SerializeField] private float speed;    
     [SerializeField] private GunFire gunFire;
     [SerializeField] private GunFireEnemy gunFireEnemy;
     [SerializeField] private bool enemy;
     
+   
+        
     public float gravity = 20f;
     private Vector3 moveDir = Vector3.zero;
     private CharacterController controller;

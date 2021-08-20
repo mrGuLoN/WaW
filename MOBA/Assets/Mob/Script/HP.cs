@@ -20,7 +20,7 @@ public class HP : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         hp = hpArmor.hp;
         if (haveDmg == true && dmg !=0)
