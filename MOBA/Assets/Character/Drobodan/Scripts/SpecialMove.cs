@@ -9,8 +9,15 @@ public class SpecialMove : MonoBehaviour
     public int thirdExp;
     private bool thirdBool;
     private PlayerDate pd;
+   
     [SerializeField] private GameObject thirdSkill;
     [SerializeField] private Animator ani;
+    [SerializeField] Camera _cam;
+    [SerializeField] private float firstDistance;
+    [SerializeField] private float freezTime;
+    [SerializeField] LayerMask lm;
+   
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +27,7 @@ public class SpecialMove : MonoBehaviour
         pd = GetComponent<PlayerDate>();
         thirdSkill.SetActive(false);
         thirdBool = false;
+        lm = 2;
     }
 
     // Update is called once per frame
@@ -30,10 +38,13 @@ public class SpecialMove : MonoBehaviour
             LvlUp();
        }
 
-       if (firstExp > 0)
-       {
-            FirstSkill();
-       }
+        if (firstExp > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                FirstSkill();
+            }            
+        }
 
        if (secondExp > 0)
        {
@@ -69,8 +80,18 @@ public class SpecialMove : MonoBehaviour
 
     void FirstSkill()
     {
+        RaycastHit hit;
+        Ray ray = _cam.ScreenPointToRay(new Vector3(_cam.pixelWidth * 0.5f, _cam.pixelHeight * 0.5f , 0));
+        if (Physics.Raycast(ray, out hit, firstDistance))
+        {
+           
 
+        }
     }
+
+   
+
+   
     void SecondSkill()
     {
 
@@ -78,7 +99,7 @@ public class SpecialMove : MonoBehaviour
     void ThirdSkill()
     {
         thirdSkill.SetActive(true);
-        thirdSkill.GetComponent<HP>().factor = thirdSkill.GetComponent<HP>().factor - 0.1f * (thirdExp - 1);
+        thirdSkill.GetComponent<HP>().factor = thirdSkill.GetComponent<HP>().factor - 0.1f * (thirdExp - 1) - pd.reloadSkill*0.01f;
         if (Input.GetKeyDown(KeyCode.Q))
         {
             thirdBool = !thirdBool;

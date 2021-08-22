@@ -10,6 +10,7 @@ public class PlayerDate : MonoBehaviour
     public int lvlPoint;
     public float reloadSkill;
     public float reloadSkillArmor;
+    public float dmgUp;
     
     // Start is called before the first frame update
     void Start()

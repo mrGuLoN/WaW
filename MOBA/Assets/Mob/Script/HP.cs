@@ -8,6 +8,8 @@ public class HP : MonoBehaviour
     public bool haveDmg = false;
     public float factor;
     public HpAndArmor hpArmor;
+    
+    public bool mobeMove;
     public float getExp;
     public int getMoney;
     public float hp;
@@ -17,18 +19,19 @@ public class HP : MonoBehaviour
         dmg = 0;
         getExp = hpArmor.getExp;
         getMoney = hpArmor.getMoney;
+      
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         hp = hpArmor.hp;
+       
         if (haveDmg == true && dmg !=0)
         {
             hpArmor.dmg = dmg*factor;
             hpArmor.haveDmg = true;
-            haveDmg = false;
-            Debug.Log("DMG IN!!!");
+            haveDmg = false;            
         }
     }  
 

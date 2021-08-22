@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
-    [SerializeField] private GameObject fireLight;
+    public GameObject fireLight;
 
     [SerializeField] private Transform gunPoint;
     [SerializeField] private float timeout = 0.5f;
@@ -13,32 +13,32 @@ public class GunFire : MonoBehaviour
     // [SerializeField] private Rigidbody bulletEnd;
     private float curTimeout;
     public bool needFire = false;
-    private AudioSource shoot;
+  //  private AudioSource shoot;
     // Start is called before the first frame update
     void Start()
     {
-        fireLight.SetActive(false);
-        shoot = GetComponent<AudioSource>();
-        shoot.Stop();
+       // fireLight.SetActive(false);
+        //shoot = GetComponent<AudioSource>();
+       // shoot.Stop();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (needFire == true)
         {
-
+            fireLight.SetActive(true);
             curTimeout += Time.deltaTime;
-            fireLight.SetActive(false);
+          
             if (curTimeout > timeout)
             {
                 curTimeout = 0;
-                shoot.Stop();
-                shoot.Play();
+              //  shoot.Stop();
+              //  shoot.Play();
                 RaycastHit hit;
                 Ray ray = new Ray(gunPoint.position, gunPoint.forward);
                 
-                fireLight.SetActive(true);
+                
 
                 if (Physics.Raycast(ray, out hit, 20))
                 {
@@ -46,8 +46,8 @@ public class GunFire : MonoBehaviour
                     {
                         hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
                         hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
-                        Debug.Log("Fire!!!");
-                        Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
+                        
+                      //  Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
                     }                   
                    
                 }
@@ -56,7 +56,7 @@ public class GunFire : MonoBehaviour
         else
         {
             
-            fireLight.SetActive(false);
+          //  fireLight.SetActive(false);
         }
     }
 }

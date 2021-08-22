@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunFireEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject fireLight;
+    public GameObject fireLight;
 
     [SerializeField] private Transform gunPoint;
     [SerializeField] private float timeout = 0.5f;
@@ -22,7 +22,7 @@ public class GunFireEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (needFire == true)
         {
@@ -40,13 +40,11 @@ public class GunFireEnemy : MonoBehaviour
                 fireLight.SetActive(true);
 
                 if (Physics.Raycast(ray, out hit, 20))
-                {
+                {                    
                     if (hit.collider.transform.gameObject.CompareTag("Turell") || hit.collider.transform.gameObject.CompareTag("Mob") || hit.collider.transform.gameObject.CompareTag("Player"))
-                    {
-                        Debug.Log("hittuerrooo!!!");
+                    {                       
                         hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
-                        hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;
-                        Debug.Log("Fire!!!");
+                        hit.collider.transform.gameObject.GetComponent<HP>().haveDmg = true;                        
                         Rigidbody bulletInstance = Instantiate(bulletEnd, hit.point, Quaternion.identity) as Rigidbody;
                     }
                    

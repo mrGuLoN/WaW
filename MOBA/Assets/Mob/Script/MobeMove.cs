@@ -5,7 +5,7 @@ using UnityEngine;
 public class MobeMove : MonoBehaviour
 {
     public List<GameObject> gameObjectIntrigger = new List<GameObject>();
-    private GameObject targetPoint;
+    [SerializeField] private GameObject targetPoint;
     [SerializeField] private GameObject[] checkPoint;
     [SerializeField] private float speed;   
     [SerializeField] private float stopDistance;
@@ -17,6 +17,7 @@ public class MobeMove : MonoBehaviour
     private bool haveTargetPoint;
     private int checkPointNumber;
     private bool endCheckPoint;
+    private Vector3 checkDistance;
     
 
     [SerializeField] private bool enemy;
@@ -42,10 +43,11 @@ public class MobeMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Debug.Log(checkPointNumber);
-        var checkDistance = checkPoint[checkPointNumber].transform.position - this.transform.position;
+
+        checkDistance = checkPoint[checkPointNumber].transform.position - transform.position;
+
         if (targetPoint == null)
         {            
             haveTargetPoint = false;
@@ -53,7 +55,7 @@ public class MobeMove : MonoBehaviour
         }  
         
         if (targetPoint != null)
-        {
+        {                      
             if (gunFire != null) gunFire.needFire = true;
             if (gunFireEnemy != null) gunFireEnemy.needFire = true;
             ani.SetBool("fire", true);
@@ -61,6 +63,7 @@ public class MobeMove : MonoBehaviour
         }
         else if (endCheckPoint == false && targetPoint == null)
         {
+                    
             if (gunFire != null) gunFire.needFire = false;
             if (gunFireEnemy != null) gunFireEnemy.needFire = false;
             ani.SetBool("fire", false);
@@ -68,8 +71,9 @@ public class MobeMove : MonoBehaviour
         }
         if (haveTargetPoint == false && checkDistance.sqrMagnitude < stopDistance*stopDistance)
         {
-            checkPointNumber++;            
-            
+            checkPointNumber++;
+           
+
             if (checkPointNumber >= checkPoint.Length)
             {
                 endCheckPoint = true;
@@ -80,11 +84,15 @@ public class MobeMove : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        
         if (other.gameObject.layer == 2)
         {
+            
             if (other.gameObject.CompareTag(enemyText + "Turell"))
             {
-                TargetPoint(other);   
+                
+                TargetPoint(other);
+                
             }
             else if (other.gameObject.CompareTag(enemyText + "Mob"))
             {
@@ -98,15 +106,17 @@ public class MobeMove : MonoBehaviour
     }
     public void OnTriggerExit (Collider other)
     {
+       
         if (other.gameObject.layer == 2)
         {
-            if(other.gameObject == targetPoint)
+            if (other.gameObject == targetPoint)
             {
-                targetPoint = null;                
+                targetPoint = null;
+                gameObjectIntrigger.Remove(other.gameObject);                
             }
             else if (other.gameObject.CompareTag(enemyText + "Turell") || other.gameObject.CompareTag(enemyText + "Mob") || other.gameObject.CompareTag(enemyText + "Player"))
             {
-                gameObjectIntrigger.Remove(other.gameObject);             
+                gameObjectIntrigger.Remove(other.gameObject);
             }
 
         }

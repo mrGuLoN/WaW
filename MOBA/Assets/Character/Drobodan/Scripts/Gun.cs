@@ -15,6 +15,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private float reloadTime;
     private PlayerDate pd;
+    private int layerMask;
 
 
     private int ammoIn;
@@ -46,6 +47,7 @@ public class Gun : MonoBehaviour
         curTimeout = tmp;
         reloadGo = false;
         pd = GetComponent<PlayerDate>();
+        layerMask = LayerMask.NameToLayer("Damage");
     }
 
     // Update is called once per frame
@@ -94,10 +96,10 @@ public class Gun : MonoBehaviour
          xRadius = Random.Range(-spreadRadius, spreadRadius);
          yRadius = Random.Range(-spreadRadius, spreadRadius);
          RaycastHit hit;
-         Ray ray = _cam.ScreenPointToRay(new Vector3(_cam.pixelWidth * 0.5f + xRadius, _cam.pixelHeight * 0.5f + yRadius, 0));
+         Ray ray = _cam.ScreenPointToRay(new Vector3(_cam.pixelWidth * 0.5f + xRadius, _cam.pixelHeight * 0.5f + yRadius));
          if (Physics.Raycast(ray, out hit, 50f))
          {
-             Debug.Log(hit.transform.tag);
+            
             if (hit.collider.transform.gameObject.CompareTag("EnemyTurell") || hit.collider.transform.gameObject.CompareTag("EnemyMob") || hit.collider.transform.gameObject.CompareTag("EnemyPlayer"))
             {
                 hit.collider.transform.gameObject.GetComponent<HP>().dmg = dmg;
