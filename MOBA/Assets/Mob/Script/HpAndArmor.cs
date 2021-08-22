@@ -6,14 +6,23 @@ public class HpAndArmor : MonoBehaviour
 {
     public float hp = 100;
     public float armor = 100;
+    public float maxHp;
+    public float maxArmor;
+    private Animator ani;
+
+   
+    
     public float dmg = 0;
     public bool haveDmg;
     public float getExp;
-    public float getMoney;
+    public int getMoney;
     // Start is called before the first frame update
     void Start()
     {
         haveDmg = false;
+        maxHp = hp;
+        maxArmor = armor;
+        ani = GetComponent<Animator>();        
     }
 
     // Update is called once per frame
@@ -21,7 +30,7 @@ public class HpAndArmor : MonoBehaviour
     {
         if (haveDmg == true)
         {
-            StartCoroutine(Damage());
+           StartCoroutine(Damage());
         }
 
         if (hp<=0)
@@ -32,15 +41,20 @@ public class HpAndArmor : MonoBehaviour
 
     IEnumerator Damage()
     {
+
         yield return new WaitForSeconds(0.01f);
         if (armor<=0)
         {
             hp = hp - dmg;
         }
+        else if (armor==maxArmor)
+        {
+            armor = armor - dmg;
+        }
         else 
         {
-            armor = armor - 0.7f * dmg;
-            hp = hp - 0.3f * dmg;
+            armor = armor - (1-((maxArmor - armor)/100))* dmg;
+            hp = hp - (dmg - (1-((maxArmor - armor) / 100)) * dmg);
         }
         haveDmg = false;
     }

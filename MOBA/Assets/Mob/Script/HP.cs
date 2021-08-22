@@ -9,7 +9,7 @@ public class HP : MonoBehaviour
     public float factor;
     public HpAndArmor hpArmor;
     public float getExp;
-    public float getMoney;
+    public int getMoney;
     public float hp;
     // Start is called before the first frame update
     void Start()

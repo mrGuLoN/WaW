@@ -166,7 +166,7 @@ public class MobeMove : MonoBehaviour
         var distance = target.transform.position - this.transform.position;
         transform.LookAt(new Vector3(target.transform.position.x, 0, target.transform.position.z));
         
-        if (distance.sqrMagnitude >= stopDistance*stopDistance)
+        if (distance.sqrMagnitude >= stopDistance*stopDistance && controller.isGrounded)
         {
             moveDir = new Vector3(0, 0, 1);
             moveDir = transform.TransformDirection(moveDir);
@@ -181,7 +181,7 @@ public class MobeMove : MonoBehaviour
             ani.SetFloat("moveZ", 0);
             moveDir = new Vector3(0, 0, 0);            
         }
-        moveDir.y -= 20 * Time.deltaTime;
+        moveDir.y -= 30 * Time.deltaTime;
 
         controller.Move(moveDir * Time.deltaTime);
     }

@@ -14,6 +14,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Animator ani;    
     [SerializeField] private Camera _cam;
     [SerializeField] private float reloadTime;
+    private PlayerDate pd;
 
 
     private int ammoIn;
@@ -44,6 +45,7 @@ public class Gun : MonoBehaviour
         reload = false;
         curTimeout = tmp;
         reloadGo = false;
+        pd = GetComponent<PlayerDate>();
     }
 
     // Update is called once per frame
@@ -104,7 +106,8 @@ public class Gun : MonoBehaviour
                 Rigidbody bulletInstance = Instantiate(bulletEndEnemy, hit.point, Quaternion.identity) as Rigidbody;
                 if (checkDeath <= 0)
                 {
-
+                    pd.exp += hit.collider.transform.GetComponent<HP>().getExp;
+                    pd.money += hit.collider.transform.GetComponent<HP>().getMoney;
                 }
             }
             else
