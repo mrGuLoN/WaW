@@ -6,7 +6,7 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] private int spreadRadius;
     [SerializeField] private float dmg;
-    [SerializeField] private int ammo;
+    public int ammo;
     [SerializeField] private int shot;
     [SerializeField] private GameObject fire;
     [SerializeField] private Rigidbody bulletEndEnemy;
@@ -15,10 +15,11 @@ public class Gun : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private float reloadTime;
     private PlayerDate pd;
-    private int layerMask;
+    [SerializeField] private AudioSource shootAudio;
+    [SerializeField] private AudioSource reloadAudio;
 
 
-    private int ammoIn;
+    public int ammoIn;
     private float xRadius;
     private float yRadius;
     private float curTimeout;
@@ -46,8 +47,7 @@ public class Gun : MonoBehaviour
         reload = false;
         curTimeout = tmp;
         reloadGo = false;
-        pd = GetComponent<PlayerDate>();
-        layerMask = LayerMask.NameToLayer("Damage");
+        pd = GetComponent<PlayerDate>();       
     }
 
     // Update is called once per frame
@@ -63,6 +63,7 @@ public class Gun : MonoBehaviour
             ShootDamage();
             onfire = true;
             ShootAni();
+            shootAudio.Play();
             ammoIn--;
            
         }
@@ -81,7 +82,8 @@ public class Gun : MonoBehaviour
             reload = true;
             ani.SetTrigger("Reload");            
             StartCoroutine(Reload());
-            reloadGo = true;            
+            reloadGo = true;
+            reloadAudio.Play();
         }
        
 
@@ -138,5 +140,6 @@ public class Gun : MonoBehaviour
         ammoIn = ammo;
         reload = false;
         reloadGo = false;
+        reloadAudio.Stop();
     }
 }

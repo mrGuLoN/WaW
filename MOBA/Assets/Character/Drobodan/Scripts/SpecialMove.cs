@@ -16,6 +16,9 @@ public class SpecialMove : MonoBehaviour
     [SerializeField] private float firstDistance;
     [SerializeField] private float freezTime;
     [SerializeField] LayerMask lm;
+    [SerializeField] GameObject oneb;
+    [SerializeField] GameObject twob;
+    [SerializeField] GameObject freeb;
    
     
     // Start is called before the first frame update
@@ -28,6 +31,9 @@ public class SpecialMove : MonoBehaviour
         thirdSkill.SetActive(false);
         thirdBool = false;
         lm = 2;
+        oneb.SetActive(false);
+        twob.SetActive(false);
+        freeb.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,17 +49,20 @@ public class SpecialMove : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 FirstSkill();
+                oneb.SetActive(true);
             }            
         }
 
        if (secondExp > 0)
        {
             SecondSkill();
-       }
+            twob.SetActive(true);
+        }
 
        if (thirdExp > 0)
        {
             ThirdSkill();
+            freeb.SetActive(true);
        }
 
     }

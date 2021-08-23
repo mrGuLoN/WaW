@@ -46,16 +46,17 @@ public class MobeMove : MonoBehaviour
     void Update()
     {
 
-        checkDistance = checkPoint[checkPointNumber].transform.position - transform.position;
+        
 
-        if (targetPoint == null)
+        if (targetPoint == null || ReferenceEquals(targetPoint, null))
         {            
             haveTargetPoint = false;
             ClearListAndSearchNewTarget();
         }  
         
         if (targetPoint != null)
-        {                      
+        {
+            checkDistance = checkPoint[checkPointNumber].transform.position - transform.position;
             if (gunFire != null) gunFire.needFire = true;
             if (gunFireEnemy != null) gunFireEnemy.needFire = true;
             ani.SetBool("fire", true);
@@ -63,7 +64,7 @@ public class MobeMove : MonoBehaviour
         }
         else if (endCheckPoint == false && targetPoint == null)
         {
-                    
+            checkDistance = checkPoint[checkPointNumber].transform.position - transform.position;
             if (gunFire != null) gunFire.needFire = false;
             if (gunFireEnemy != null) gunFireEnemy.needFire = false;
             ani.SetBool("fire", false);
@@ -71,8 +72,7 @@ public class MobeMove : MonoBehaviour
         }
         if (haveTargetPoint == false && checkDistance.sqrMagnitude < stopDistance*stopDistance)
         {
-            checkPointNumber++;
-           
+            checkPointNumber++;           
 
             if (checkPointNumber >= checkPoint.Length)
             {
